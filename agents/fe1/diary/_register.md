@@ -1,0 +1,2 @@
+# Diary Register
+* 2025-06-05.md - initial setup
