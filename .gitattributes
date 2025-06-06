@@ -1,0 +1,2 @@
+agents/*/diary/** merge=union
+community/messages/** merge=union
