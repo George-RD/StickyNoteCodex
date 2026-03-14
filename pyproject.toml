@@ -1,0 +1,19 @@
+[project]
+name = "dry-context-runtime"
+version = "0.1.0"
+description = "DRY-first context compiler for multi-agent LLM orchestration"
+readme = "PROJECT.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pyyaml>=6.0",
+]
+
+[project.scripts]
+dry-context = "dry_context_runtime.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["dry_context_runtime"]
