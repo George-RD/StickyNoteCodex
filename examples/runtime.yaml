@@ -1,0 +1,59 @@
+blocks:
+  system.role:
+    content: "You are a helpful assistant."
+    tags: [system]
+    token_estimate: 8
+  system.safety:
+    content: "Follow safety rules and decline unsafe actions."
+    tags: [system, safety]
+    token_estimate: 10
+  system.output_json:
+    content: "Respond with strict JSON only."
+    tags: [system, output]
+    token_estimate: 6
+  user.concise:
+    content: "User prefers concise answers."
+    tags: [user]
+    token_estimate: 5
+  workflow.plugin_context:
+    content: "Project is PluginX with modular architecture."
+    tags: [workflow]
+    token_estimate: 9
+  workflow.research_context:
+    content: "Research goals and preferred source quality."
+    tags: [workflow]
+    token_estimate: 8
+  agent.architect.style:
+    content: "Prioritize modular design and tradeoff analysis."
+    tags: [agent]
+    token_estimate: 8
+
+profiles:
+  base:
+    - system.role
+    - system.safety
+    - system.output_json
+    - user.concise
+  plugin_workflow:
+    - workflow.plugin_context
+  research_workflow:
+    - workflow.research_context
+
+agents:
+  architect:
+    extends: [base]
+    adds: [agent.architect.style]
+
+policies:
+  - id: plugin-workflow-rule
+    when:
+      workflow: plugin
+    include: [workflow.plugin_context]
+  - id: research-workflow-rule
+    when:
+      workflow: research
+    include: [workflow.research_context]
+  - id: skip-json-for-brainstorm
+    when:
+      task: brainstorm
+    exclude: [system.output_json]
